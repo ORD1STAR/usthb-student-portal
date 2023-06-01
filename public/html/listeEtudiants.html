@@ -122,7 +122,7 @@
             socket.on("getAdminSections", sections => {
                 document.getElementById("secSelect").innerHTML = ""
                 sections.forEach(section =>{
-                    document.getElementById("secSelect").innerHTML += `<option value="${section["idSec"]}">${section["nom"]}</option>`
+                    document.getElementById("secSelect").innerHTML += `<option value="${section["idSec"]}">${section["specialite"]}</option>`
                 })
             })
             document.querySelectorAll(".notAdmin").forEach(element => {
