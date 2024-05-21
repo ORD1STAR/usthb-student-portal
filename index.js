@@ -27,13 +27,13 @@ let transporter = nodemailer.createTransport({
         pass: process.env.SMTP_PASS
     }
 });
-
+ 
 
 connection = mysql.createConnection({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME
+    host: 'localhost',
+    user: "root",
+    password: "",
+    database: "pfe_gtr3"
 });
 connection.connect(function(err) {
     if(err){
@@ -617,7 +617,7 @@ io.on('connection', (socket) => {
                                 
                             })
                         }
-                    })
+                    }) 
                 }
                 //admin
                 else if(role == "admin"){
@@ -625,29 +625,35 @@ io.on('connection', (socket) => {
                         if(err){
                             console.log(err.message);
                         }
-                        if(result1.length > 0){
-                            console.log("+ admin connected> " + result1[0]["login"]);
-                            socket.join(result1[0]["login"])
-                            if([...socket.rooms][1] in timeouts){
-                                clearTimeout(timeouts[[...socket.rooms][1]])
-                            }
-                            connection.query("SELECT idSec, module.nom, niveau, specialite, codeMod, type FROM module, section, typeModule WHERE typeModule.module = module.codeMod AND module.secID = section.idSec group by codeMod", [], function(err, result2, fields){
-                                
-                                if(err){
-                                    console.log(err.message);
+                        if(result1){
+                            if(result1.length > 0){
+                                console.log("+ admin connected> " + result1[0]["login"]);
+                                socket.join(result1[0]["login"])
+                                if([...socket.rooms][1] in timeouts){
+                                    clearTimeout(timeouts[[...socket.rooms][1]])
                                 }
-                                if(result2.length > 0){
-                                    if(result2.length > 0){
-                                        connection.query("SELECT codeMod, type, login FROM module, typeModule, user WHERE secID=? AND typeModule.module = module.codeMod AND typeModule.enseignantID = user.idUser", [result1[0]["idSec"]], function(err, result3, fields){
-                                            if(err){
-                                                console.log(err.message);
-                                            }
-                                            socket.emit('connectedAdm', [result1[0], result2, result3]);
-                                        })
+                                connection.query("SELECT idSec, module.nom, niveau, specialite, codeMod, type FROM module, section, typeModule WHERE typeModule.module = module.codeMod AND module.secID = section.idSec group by codeMod", [], function(err, result2, fields){
+                                    
+                                    if(err){
+                                        console.log(err.message);
                                     }
-                                }
-                                
-                            })
+                                    if(result2){
+
+                                        if(result2.length > 0){
+                                            if(result2.length > 0){
+                                                connection.query("SELECT codeMod, type, login FROM module, typeModule, user WHERE secID=? AND typeModule.module = module.codeMod AND typeModule.enseignantID = user.idUser", [result1[0]["idSec"]], function(err, result3, fields){
+                                                    if(err){
+                                                        console.log(err.message);
+                                                    }
+                                                    socket.emit('connectedAdm', [result1[0], result2, result3]);
+                                                })
+                                            }
+                                        }
+                                    }
+                                     
+                                })
+                            }
+                            
                         }
                     })
                 }
@@ -1487,8 +1493,11 @@ io.on('connection', (socket) => {
             if(err){
                 console.log(err.message);
             }
-            if(result.length > 0){
-                socket.emit("getLsEnseignants", result)
+            if(result){
+                if(result.length > 0){
+                    socket.emit("getLsEnseignants", result)
+                }
+
             }
         })
     })
@@ -1803,8 +1812,7 @@ io.on('connection', (socket) => {
     socket.on("addProf", data => { // data format [nom, prenom, phone, email]
 
         mdp = generateCode(10)
-        console.log(mdp);
-        envoyerMail(data[3], "Un compte enseignant a été créé", "Un administrateur a créé un compte enseignant pour vous. Votre mot de passe est: " + mdp)
+        envoyerMail(data[3], "Un compte SuperENT enseignant a été créé", `Un administrateur a créé un compte enseignant pour vous.\nVotre identifiant est: ${data[0].toLowerCase()}.${data[1].toLowerCase()}.\nVotre mot de passe est: ${mdp}\n\nVous pouvez vous connecter à l'adresse suivante: ${process.env.APP_URL || "http://localhost:3000"}`)
         
         bcrypt.hash(mdp, 14, function(err, hash) {
             
