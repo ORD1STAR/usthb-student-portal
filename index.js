@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const path = require('path')
 const app = express();
@@ -30,10 +31,10 @@ let transporter = nodemailer.createTransport({
  
 
 connection = mysql.createConnection({
-    host: 'localhost',
-    user: "root",
-    password: "",
-    database: "pfe_gtr3"
+    host: process.env.DB_HOST || 'localhost',
+    user: process.env.DB_USER || 'root',
+    password: process.env.DB_PASSWORD || '',
+    database: process.env.DB_NAME || 'pfe_gtr3'
 });
 connection.connect(function(err) {
     if(err){
