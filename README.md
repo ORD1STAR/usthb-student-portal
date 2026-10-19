@@ -33,9 +33,9 @@ This project was built as a team effort. Both contributors' commits are preserve
 | Contributor | GitHub | Role in this repo |
 | --- | --- | --- |
 | **Hannoun Amine Amar** | [@ORD1STAR](https://github.com/ORD1STAR) | Project author; the majority of the commits (42 of 57 historical commits), covering the server and the main features |
-| **Rcym** | [@Rcym](https://github.com/Rcym) | Collaborator; 15 commits, with commit messages about front-end pages, icons, section management, grade entry, timetable fixes and final clean-up |
+| **Racym OuldHammouda** | [@Rcym](https://github.com/Rcym) | Collaborator; 15 commits, with commit messages about front-end pages, icons, section management, grade entry, timetable fixes and final clean-up |
 
-Thank you to Rcym for the collaboration. Run `git shortlog -sn` to see the contributions per author.
+Thank you to Racym OuldHammouda (@Rcym) for the collaboration. Run `git shortlog -sn` to see the contributions per author.
 
 ## 📑 Table of contents
 
@@ -213,7 +213,7 @@ Released under the [MIT License](LICENSE).
 
 <table>
   <tr>
-    <td><b>Hannoun Amine Amar</b><br/>AI Engineer / Fullstack Developer, Algeria<br/>Co-author: <a href="https://github.com/Rcym">@Rcym</a></td>
+    <td><b>Hannoun Amine Amar</b><br/>AI Engineer / Fullstack Developer, Algeria<br/>Co-author: Racym OuldHammouda (<a href="https://github.com/Rcym">@Rcym</a>)</td>
     <td>
       <a href="https://www.linkedin.com/in/hannoun-amine/"><img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=flat-square&logo=linkedin&logoColor=white" alt="LinkedIn" /></a>
       <a href="https://github.com/ORD1STAR"><img src="https://img.shields.io/badge/GitHub-ORD1STAR-181717?style=flat-square&logo=github" alt="GitHub" /></a>
